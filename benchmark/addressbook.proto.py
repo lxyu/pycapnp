@@ -1,8 +1,4 @@
-from __future__ import print_function
 import addressbook_pb2 as addressbook
-import os
-
-print = lambda *x: x
 
 
 def writeAddressBook():
@@ -34,16 +30,12 @@ def printAddressBook(message_string):
     addressBook = addressbook.AddressBook()
     addressBook.ParseFromString(message_string)
 
-    for person in addressBook.person:
-        print(person.name, ':', person.email)
-        for phone in person.phone:
-            print(phone.type, ':', phone.number)
-        print()
-
 
 if __name__ == '__main__':
+    import time
+    t1 = time.time()
     for i in range(10000):
         message_string = writeAddressBook()
-
         printAddressBook(message_string)
-
+    t2 = time.time()
+    print(t2-t1)

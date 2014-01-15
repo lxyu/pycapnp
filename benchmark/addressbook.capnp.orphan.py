@@ -1,11 +1,5 @@
-from __future__ import print_function
-import os
 import capnp
-
-this_dir = os.path.dirname(__file__)
-addressbook = capnp.load(os.path.join(this_dir, 'addressbook.capnp'))
-
-print = lambda *x: x
+import addressbook_capnp as addressbook
 
 
 def writeAddressBook():
@@ -34,19 +28,16 @@ def writeAddressBook():
     msg_bytes = addressBook.to_bytes()
     return msg_bytes
 
+
 def printAddressBook(msg_bytes):
     addressBook = addressbook.AddressBook.from_bytes(msg_bytes)
 
-    for person in addressBook.people:
-        print(person.name, ':', person.email)
-        for phone in person.phones:
-            print(phone.type, ':', phone.number)
-        print()
-
 
 if __name__ == '__main__':
+    import time
+    t1 = time.time()
     for i in range(10000):
         msg_bytes = writeAddressBook()
-
         printAddressBook(msg_bytes)
-
+    t2 = time.time()
+    print(t2-t1)
