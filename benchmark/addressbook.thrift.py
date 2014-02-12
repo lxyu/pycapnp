@@ -1,5 +1,4 @@
-from thrift.transport import TTransport
-from thrift.protocol import TBinaryProtocol
+from thriftpy.utils import serialize, deserialize
 
 import addressbook_thrift as addressbook
 
@@ -28,18 +27,13 @@ def writeAddressBook():
 
     addressBook = addressbook.AddressBook()
     addressBook.people = [alice, bob]
-    transport = TTransport.TMemoryBuffer()
-    protocol = TBinaryProtocol.TBinaryProtocolAccelerated(transport)
-    addressBook.write(protocol)
-    message_string = transport.getvalue()
+    message_string = serialize(addressBook)
     return message_string
 
 
 def printAddressBook(message_string):
     addressBook = addressbook.AddressBook()
-    transport = TTransport.TMemoryBuffer(message_string)
-    protocol = TBinaryProtocol.TBinaryProtocolAccelerated(transport)
-    addressBook.read(protocol)
+    return deserialize(addressBook, message_string)
 
 
 if __name__ == '__main__':

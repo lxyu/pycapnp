@@ -5,17 +5,17 @@ enum PhoneType {
 }
 
 struct PhoneNumber {
-    1: required string number,
+    1: optional string number,
     2: optional PhoneType type,
 }
 
 struct Person {
-    1: required i32 id,
-    2: required string name,
-    3: required string email,
-    4: required list<PhoneNumber> phones,
+    1: optional i32 id,
+    2: optional string name,
+    3: optional string email,
+    4: optional list<PhoneNumber> phones,
 }
 
 struct AddressBook {
-    1: required list<Person> people,
+    1: optional list<Person> people,
 }
